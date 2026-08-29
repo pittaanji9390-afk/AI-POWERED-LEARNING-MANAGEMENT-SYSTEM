@@ -1,12 +1,13 @@
-import React from "react";
+﻿import React from "react";
 import { NavLink } from "react-router-dom";
-import { BookOpen, LayoutDashboard, Sparkles, GraduationCap, Award, Settings, ShieldCheck, CheckSquare } from "lucide-react";
+import { BookOpen, LayoutDashboard, Sparkles, GraduationCap, Award, Route, ShieldCheck, Code } from "lucide-react";
 import { cn } from "../../lib/utils";
 
 export const Sidebar: React.FC = () => {
   const links = [
     { to: "/dashboard", label: "Overview", icon: LayoutDashboard },
     { to: "/courses", label: "Course Catalog", icon: BookOpen },
+    { to: "/learning-path", label: "Learning Path", icon: Route },
     { to: "/my-learning", label: "My Learning", icon: GraduationCap },
     { to: "/ai-tutor", label: "AI Tutor Studio", icon: Sparkles },
     { to: "/certificates", label: "Certificates", icon: Award },
