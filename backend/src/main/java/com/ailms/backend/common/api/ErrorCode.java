@@ -1,0 +1,15 @@
+package com.ailms.backend.common.api;
+
+public enum ErrorCode {
+    VALIDATION_ERROR,
+    RESOURCE_NOT_FOUND,
+    UNAUTHORIZED,
+    FORBIDDEN,
+    TENANT_ACCESS_DENIED,
+    CONFLICT,
+    RATE_LIMIT_EXCEEDED,
+    AI_PROVIDER_ERROR,
+    PAYMENT_FAILED,
+    INTERNAL_SERVER_ERROR,
+    BAD_REQUEST
+}

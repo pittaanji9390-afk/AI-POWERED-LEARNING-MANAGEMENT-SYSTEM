@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ailms-frontend
+  labels:
+    app: ailms-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: ailms-frontend
+  template:
+    metadata:
+      labels:
+        app: ailms-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: ailms-frontend:latest
+        ports:
+        - containerPort: 80

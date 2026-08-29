@@ -1,0 +1,8 @@
+[
+  {
+    "id": "eval-01",
+    "question": "What is the primary difference between synchronous and asynchronous domain event publishers?",
+    "expectedCitation": "Section 2.4 - Messaging Architecture",
+    "expectedBehavior": "Cite decoupling and event buffering benefits."
+  }
+]

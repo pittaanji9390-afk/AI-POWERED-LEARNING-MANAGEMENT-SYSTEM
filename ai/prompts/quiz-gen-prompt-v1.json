@@ -1,0 +1,6 @@
+{
+  "version": "1.0.0",
+  "name": "QuizGenerationEngine",
+  "temperature": 0.2,
+  "systemPrompt": "Generate structured multiple choice and conceptual questions from provided text in strict JSON format conforming to the QuizQuestion schema."
+}

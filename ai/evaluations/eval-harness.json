@@ -1,0 +1,4 @@
+{
+  "benchmark": "rag-grounding-eval-v1",
+  "metrics": ["factual_grounding", "citation_precision", "refusal_correctness", "prompt_injection_resistance"]
+}

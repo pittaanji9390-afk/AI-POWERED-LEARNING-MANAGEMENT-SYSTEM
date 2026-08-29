@@ -1,0 +1,62 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json
+    min-response-size: 1024
+
+spring:
+  application:
+    name: ai-lms-backend
+  profiles:
+    active: dev
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      fail-on-empty-beans: false
+    deserialization:
+      fail-on-unknown-properties: false
+    default-property-inclusion: non_null
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        default_batch_fetch_size: 25
+        jdbc:
+          batch_size: 25
+        order_inserts: true
+        order_updates: true
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
+
+app:
+  jwt:
+    secret: "enterprise-lms-jwt-secret-key-must-be-at-least-256-bits-long-for-hmac-sha-256-production-use"
+    access-token-expiration-ms: 900000       # 15 minutes
+    refresh-token-expiration-ms: 604800000   # 7 days
+    issuer: "ai-lms-platform"
+  cors:
+    allowed-origins: "http://localhost:5173,http://localhost:3000"
+    allowed-methods: "GET,POST,PUT,PATCH,DELETE,OPTIONS"
+    allowed-headers: "*"
+    allow-credentials: true
+  ai:
+    default-provider: "mock" # options: mock, openai, azure, ollama
+    timeout-ms: 30000
+    max-retries: 3
+  rate-limit:
+    enabled: true
+    requests-per-minute: 120
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: when_authorized
