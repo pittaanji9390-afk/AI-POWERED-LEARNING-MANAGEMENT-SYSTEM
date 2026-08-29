@@ -20,6 +20,7 @@ import { DiscussionBoardPage } from "./pages/courses/DiscussionBoardPage";
 import { QuizPlayerPage } from "./pages/courses/QuizPlayerPage";
 import { LearningPathPage } from "./pages/learn/LearningPathPage";
 import { PricingPlansPage } from "./pages/payment/PricingPlansPage";
+import { CodingLabPage } from "./pages/learn/CodingLabPage";
 
 export const App: React.FC = () => {
   return (
@@ -42,6 +43,7 @@ export const App: React.FC = () => {
                 <Route path="/courses" element={<CourseCatalogPage />} />
                 <Route path="/pricing" element={<PricingPlansPage />} />
                 <Route path="/learning-path" element={<LearningPathPage />} />
+                <Route path="/lab" element={<CodingLabPage />} />
                 <Route path="/ai-tutor" element={<AiTutorPage />} />
                 <Route path="/discussions" element={<DiscussionBoardPage />} />
                 <Route path="/my-learning" element={<StudentDashboard />} />
