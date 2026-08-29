@@ -1,6 +1,6 @@
 ﻿import React from "react";
 import { NavLink } from "react-router-dom";
-import { BookOpen, LayoutDashboard, Sparkles, GraduationCap, Award, Route, ShieldCheck, Code2 } from "lucide-react";
+import { BookOpen, LayoutDashboard, Sparkles, GraduationCap, Award, Route, ShieldCheck, Code2, BarChart2, ShieldAlert, FileText, User } from "lucide-react";
 import { cn } from "../../lib/utils";
 
 export const Sidebar: React.FC = () => {
@@ -9,14 +9,18 @@ export const Sidebar: React.FC = () => {
     { to: "/courses", label: "Course Catalog", icon: BookOpen },
     { to: "/learning-path", label: "Learning Path", icon: Route },
     { to: "/lab", label: "Coding Sandbox", icon: Code2 },
+    { to: "/analytics", label: "Analytics", icon: BarChart2 },
     { to: "/my-learning", label: "My Learning", icon: GraduationCap },
     { to: "/ai-tutor", label: "AI Tutor Studio", icon: Sparkles },
     { to: "/certificates", label: "Certificates", icon: Award },
+    { to: "/profile", label: "My Profile", icon: User },
     { to: "/admin", label: "Administration", icon: ShieldCheck },
+    { to: "/admin/moderation", label: "Moderation Queue", icon: ShieldAlert },
+    { to: "/admin/audit-logs", label: "Audit Logs", icon: FileText },
   ];
 
   return (
-    <aside className="w-64 border-r border-slate-800/80 bg-slate-950/40 p-4 space-y-1">
+    <aside className="w-64 border-r border-slate-800/80 bg-slate-950/40 p-4 space-y-1 overflow-y-auto">
       <div className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mb-2">
         Platform Menu
       </div>

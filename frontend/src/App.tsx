@@ -22,6 +22,10 @@ import { LearningPathPage } from "./pages/learn/LearningPathPage";
 import { PricingPlansPage } from "./pages/payment/PricingPlansPage";
 import { CodingLabPage } from "./pages/learn/CodingLabPage";
 import { AssignmentSubmissionPage } from "./pages/learn/AssignmentSubmissionPage";
+import { AnalyticsDashboardPage } from "./pages/analytics/AnalyticsDashboardPage";
+import { ModerationQueuePage } from "./pages/admin/ModerationQueuePage";
+import { AuditLogsPage } from "./pages/admin/AuditLogsPage";
+import { UserProfilePage } from "./pages/profile/UserProfilePage";
 
 export const App: React.FC = () => {
   return (
@@ -46,10 +50,12 @@ export const App: React.FC = () => {
                 <Route path="/pricing" element={<PricingPlansPage />} />
                 <Route path="/learning-path" element={<LearningPathPage />} />
                 <Route path="/lab" element={<CodingLabPage />} />
+                <Route path="/analytics" element={<AnalyticsDashboardPage />} />
                 <Route path="/ai-tutor" element={<AiTutorPage />} />
                 <Route path="/discussions" element={<DiscussionBoardPage />} />
                 <Route path="/my-learning" element={<StudentDashboard />} />
                 <Route path="/certificates" element={<StudentDashboard />} />
+                <Route path="/profile" element={<UserProfilePage />} />
 
                 {/* Teacher Routes */}
                 <Route path="/teacher" element={<TeacherDashboard />} />
@@ -59,6 +65,8 @@ export const App: React.FC = () => {
 
                 {/* Admin Routes */}
                 <Route path="/admin" element={<AdminDashboard />} />
+                <Route path="/admin/moderation" element={<ModerationQueuePage />} />
+                <Route path="/admin/audit-logs" element={<AuditLogsPage />} />
               </Route>
             </Routes>
           </BrowserRouter>
