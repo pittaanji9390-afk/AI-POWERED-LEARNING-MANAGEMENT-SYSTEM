@@ -21,6 +21,7 @@ import { QuizPlayerPage } from "./pages/courses/QuizPlayerPage";
 import { LearningPathPage } from "./pages/learn/LearningPathPage";
 import { PricingPlansPage } from "./pages/payment/PricingPlansPage";
 import { CodingLabPage } from "./pages/learn/CodingLabPage";
+import { AssignmentSubmissionPage } from "./pages/learn/AssignmentSubmissionPage";
 
 export const App: React.FC = () => {
   return (
@@ -35,6 +36,7 @@ export const App: React.FC = () => {
               <Route path="/certificates/verify/:verificationCode" element={<CertificateVerifyPage />} />
               <Route path="/learn/:courseId/:lessonId" element={<LearningPlayerPage />} />
               <Route path="/quizzes/:quizId/take" element={<QuizPlayerPage />} />
+              <Route path="/assignments/:id/submit" element={<AssignmentSubmissionPage />} />
 
               {/* Main Authenticated Layout */}
               <Route element={<DashboardLayout />}>
