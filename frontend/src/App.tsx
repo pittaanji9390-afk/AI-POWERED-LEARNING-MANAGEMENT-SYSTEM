@@ -12,6 +12,11 @@ import { StudentDashboard } from "./pages/dashboard/StudentDashboard";
 import { CourseCatalogPage } from "./pages/courses/CourseCatalogPage";
 import { LearningPlayerPage } from "./pages/learn/LearningPlayerPage";
 import { AiTutorPage } from "./pages/tutor/AiTutorPage";
+import { TeacherDashboard } from "./pages/teacher/TeacherDashboard";
+import { CourseBuilderPage } from "./pages/courses/CourseBuilderPage";
+import { AdminDashboard } from "./pages/admin/AdminDashboard";
+import { CertificateVerifyPage } from "./pages/courses/CertificateVerifyPage";
+import { DiscussionBoardPage } from "./pages/courses/DiscussionBoardPage";
 
 export const App: React.FC = () => {
   return (
@@ -20,18 +25,30 @@ export const App: React.FC = () => {
         <TenantProvider>
           <BrowserRouter>
             <Routes>
+              {/* Public Routes */}
               <Route path="/login" element={<LoginPage />} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/certificates/verify/:verificationCode" element={<CertificateVerifyPage />} />
               <Route path="/learn/:courseId/:lessonId" element={<LearningPlayerPage />} />
 
+              {/* Main Authenticated Layout */}
               <Route element={<DashboardLayout />}>
                 <Route path="/" element={<Navigate to="/dashboard" replace />} />
                 <Route path="/dashboard" element={<StudentDashboard />} />
                 <Route path="/courses" element={<CourseCatalogPage />} />
                 <Route path="/ai-tutor" element={<AiTutorPage />} />
+                <Route path="/discussions" element={<DiscussionBoardPage />} />
                 <Route path="/my-learning" element={<StudentDashboard />} />
                 <Route path="/certificates" element={<StudentDashboard />} />
-                <Route path="/admin" element={<StudentDashboard />} />
+
+                {/* Teacher Routes */}
+                <Route path="/teacher" element={<TeacherDashboard />} />
+                <Route path="/courses/create" element={<CourseBuilderPage />} />
+                <Route path="/courses/:id/edit" element={<CourseBuilderPage />} />
+                <Route path="/teacher/grading" element={<TeacherDashboard />} />
+
+                {/* Admin Routes */}
+                <Route path="/admin" element={<AdminDashboard />} />
               </Route>
             </Routes>
           </BrowserRouter>
