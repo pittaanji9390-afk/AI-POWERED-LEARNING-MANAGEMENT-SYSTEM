@@ -19,6 +19,7 @@ import { CertificateVerifyPage } from "./pages/courses/CertificateVerifyPage";
 import { DiscussionBoardPage } from "./pages/courses/DiscussionBoardPage";
 import { QuizPlayerPage } from "./pages/courses/QuizPlayerPage";
 import { LearningPathPage } from "./pages/learn/LearningPathPage";
+import { PricingPlansPage } from "./pages/payment/PricingPlansPage";
 
 export const App: React.FC = () => {
   return (
@@ -39,6 +40,7 @@ export const App: React.FC = () => {
                 <Route path="/" element={<Navigate to="/dashboard" replace />} />
                 <Route path="/dashboard" element={<StudentDashboard />} />
                 <Route path="/courses" element={<CourseCatalogPage />} />
+                <Route path="/pricing" element={<PricingPlansPage />} />
                 <Route path="/learning-path" element={<LearningPathPage />} />
                 <Route path="/ai-tutor" element={<AiTutorPage />} />
                 <Route path="/discussions" element={<DiscussionBoardPage />} />

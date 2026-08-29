@@ -1,10 +1,10 @@
-import React from "react";
+﻿import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { useTenant } from "../../context/TenantContext";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
-import { BookOpen, Sparkles, User, LogOut, Shield } from "lucide-react";
+import { BookOpen, Sparkles, User, LogOut, Shield, CreditCard } from "lucide-react";
 
 export const Navbar: React.FC = () => {
   const { user, isAuthenticated, logout } = useAuth();
@@ -27,6 +27,7 @@ export const Navbar: React.FC = () => {
 
       <nav className="hidden md:flex items-center gap-6 text-sm">
         <Link to="/courses" className="text-slate-400 hover:text-white transition-colors">Catalog</Link>
+        <Link to="/pricing" className="text-slate-400 hover:text-white transition-colors">Pricing</Link>
         <Link to="/dashboard" className="text-slate-400 hover:text-white transition-colors">Dashboard</Link>
         <Link to="/ai-tutor" className="flex items-center gap-1 text-indigo-400 hover:text-indigo-300 transition-colors">
           <Sparkles className="h-3.5 w-3.5" />
