@@ -1,4 +1,18 @@
-# Enterprise SaaS LMS & AI Platform — Comprehensive Threat Model (STRIDE)
+﻿import os
+
+def write(filepath, content):
+    dirpath = os.path.dirname(filepath)
+    if dirpath:
+        os.makedirs(dirpath, exist_ok=True)
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write(content.strip() + "\n")
+    print(f"Wrote: {filepath}")
+
+# =========================================================================
+# 1. EXPAND ALL TECHNICAL DOCUMENTATION (RFCs, ARCHITECTURE & SECURITY)
+# =========================================================================
+
+write("docs/THREAT-MODEL.md", """# Enterprise SaaS LMS & AI Platform — Comprehensive Threat Model (STRIDE)
 
 ## 1. Executive Summary & Scope
 This threat model assesses security risks, attack surfaces, threat vectors, and mitigations for the Enterprise SaaS AI-Powered Learning Management System across all user tiers (Students, Instructors, Organization Admins, Platform Admins, and AI Automated Systems).
@@ -48,3 +62,97 @@ This threat model assesses security risks, attack surfaces, threat vectors, and 
 | :--- | :--- | :--- | :--- | :--- |
 | **IDOR Course Content Access** | High | `/api/v1/courses/{id}/content` | Spring Method Security `@PreAuthorize("hasAuthority('course:read')")` and server-side enrollment check. | `IdorCourseAccessTest` |
 | **Student Grading Privilege Escalation** | Critical | `/api/v1/grading/*` | Strict role validation ensuring only `TEACHER`, `TEACHING_ASSISTANT`, or `PLATFORM_ADMIN` can submit grades. | `RoleElevationSecurityTest` |
+""")
+
+write("docs/RAG.md", """# Retrieval-Augmented Generation (RAG) & AI Orchestration Specification
+
+## 1. Architectural Overview
+The RAG pipeline provides contextual, grounded learning assistance by retrieving validated course documents, syllabus sections, and instructor materials to answer student inquiries with zero hallucinations.
+
+```
++----------------------------------------------------------------------------------------------------+
+|                                    STUDENT INQUIRY WORKFLOW                                        |
++----------------------------------------------------------------------------------------------------+
+
+1. Student Query ──► 2. Authentication & Course Enrollment Validation
+                               │
+                               ▼
+3. Input Moderation & Anti-Prompt-Injection Delimiter Check
+                               │
+                               ▼
+4. Generate Query Vector via EmbeddingProvider (1536-dim Cosine Vector)
+                               │
+                               ▼
+5. Execute pgvector HNSW Query with Tenant & Course Scope
+   (SELECT chunk_content, section_heading, page_number FROM document_chunks WHERE course_id = :id)
+                               │
+                               ▼
+6. Threshold Evaluation: Similarity Score >= 0.75 ?
+       ├── YES: Assemble System Prompt with Boundary Delimiters (<<<COURSE_CONTEXT>>>)
+       └── NO:  Return Standard Pedagogical Refusal ("Information not found in course materials.")
+                               │
+                               ▼
+7. Stream Completion from LlmProvider (Temperature 0.3) with Extracted Source Citations
+```
+
+---
+
+## 2. Document Chunking Strategy
+- **Chunk Size**: 512 tokens (~2048 characters)
+- **Chunk Overlap**: 50 tokens (~200 characters)
+- **Splitter Strategy**: Recursive character chunking preserving paragraph and sentence boundaries.
+- **Metadata Enriched**: Each chunk retains `course_id`, `section_heading`, `page_number`, and `chunk_index`.
+
+---
+
+## 3. Vector Database Specification (pgvector)
+- **Index Type**: HNSW (Hierarchical Navigable Small World)
+- **Distance Metric**: Cosine Distance (`vector_cosine_ops`)
+- **Index Parameters**: `m = 16`, `ef_construction = 64`
+- **Search Query Time**: `< 2ms` on 100k embedded chunks.
+""")
+
+write("docs/BACKUP-RECOVERY.md", """# Enterprise Disaster Recovery & Continuous Backup Runbook
+
+## 1. Recovery Objectives
+- **RPO (Recovery Point Objective)**: `< 5 minutes`
+- **RTO (Recovery Time Objective)**: `< 30 minutes`
+
+---
+
+## 2. Continuous PostgreSQL WAL Archiving
+Database transactions are streamed to encrypted S3 object storage in real-time via PostgreSQL Write-Ahead Logging (WAL).
+
+```bash
+# PostgreSQL WAL Configuration (postgresql.conf)
+wal_level = replica
+archive_mode = on
+archive_command = 'pgbackrest --stanza=ailms_db archive-push %p'
+archive_timeout = 300
+```
+
+---
+
+## 3. Full & Incremental Snapshot Schedule
+1. **Daily Full Backup**: Executed at 01:00 UTC with AES-256 encryption. Retained for 90 days.
+2. **Hourly Differential Backup**: Executed every hour on the hour. Retained for 14 days.
+3. **Point-In-Time Recovery (PITR)**: Allows restoring database state to any specific timestamp within the last 14 days.
+
+---
+
+## 4. Disaster Recovery Procedure (Failover Runbook)
+1. **Detect Outage**: Health checks alert on 3 consecutive failed probes to `/api/v1/health`.
+2. **Promote Standby Database**:
+   ```bash
+   pgbackrest --stanza=ailms_db --type=standby restore
+   pg_ctl promote -D /var/lib/postgresql/data
+   ```
+3. **Update Database Connection Pool**: Shift traffic to promoted primary endpoint.
+4. **Flush Redis L2 Cache**: Prevent stale cache reads from pre-failover transactions.
+5. **Verify API Integrity**: Run automated health validation suite:
+   ```bash
+   curl -f http://localhost:8080/api/v1/health
+   ```
+""")
+
+print("Documentation suites expanded.")
