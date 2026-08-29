@@ -1,4 +1,4 @@
-import React from "react";
+﻿import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./lib/queryClient";
@@ -17,6 +17,7 @@ import { CourseBuilderPage } from "./pages/courses/CourseBuilderPage";
 import { AdminDashboard } from "./pages/admin/AdminDashboard";
 import { CertificateVerifyPage } from "./pages/courses/CertificateVerifyPage";
 import { DiscussionBoardPage } from "./pages/courses/DiscussionBoardPage";
+import { QuizPlayerPage } from "./pages/courses/QuizPlayerPage";
 
 export const App: React.FC = () => {
   return (
@@ -30,6 +31,7 @@ export const App: React.FC = () => {
               <Route path="/register" element={<RegisterPage />} />
               <Route path="/certificates/verify/:verificationCode" element={<CertificateVerifyPage />} />
               <Route path="/learn/:courseId/:lessonId" element={<LearningPlayerPage />} />
+              <Route path="/quizzes/:quizId/take" element={<QuizPlayerPage />} />
 
               {/* Main Authenticated Layout */}
               <Route element={<DashboardLayout />}>
